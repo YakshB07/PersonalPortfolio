@@ -17,13 +17,13 @@ const Contact = () => {
     {
       icon: <Github size={24} />,
       label: 'GitHub',
-      value: 'github.com/YakshB07',
+      value: 'YakshB07',
       href: 'https://github.com/YakshB07',
     },
     {
       icon: <Linkedin size={24} />,
       label: 'LinkedIn',
-      value: 'yaksh-butani-813973328',
+      value: 'Yaksh Butani',
       href: 'https://linkedin.com/in/yaksh-butani-813973328',
     },
   ];

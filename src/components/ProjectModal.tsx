@@ -1,0 +1,312 @@
+import { useEffect, useRef, useState } from 'react';
+import { X, ExternalLink, Github, Award, Calendar, Users, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
+
+export interface ProjectDetail {
+  id: string;
+  title: string;
+  collaborators: string;
+  dates: string;
+  overview: string;
+  keyFeatures: string[];
+  technologies: string[];
+  github: string;
+  demo?: string;
+  award?: string;
+  media: {
+    type: 'image' | 'video';
+    url: string;
+    caption?: string;
+  }[];
+}
+
+interface ProjectModalProps {
+  project: ProjectDetail | null;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      setCurrentMediaIndex(0);
+      setIsVideoPlaying(false);
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
+
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === modalRef.current) {
+      onClose();
+    }
+  };
+
+  const nextMedia = () => {
+    if (project) {
+      setCurrentMediaIndex((prev) => (prev + 1) % project.media.length);
+      setIsVideoPlaying(false);
+    }
+  };
+
+  const prevMedia = () => {
+    if (project) {
+      setCurrentMediaIndex((prev) => (prev - 1 + project.media.length) % project.media.length);
+      setIsVideoPlaying(false);
+    }
+  };
+
+  const toggleVideoPlay = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
+
+  if (!isOpen || !project) return null;
+
+  const currentMedia = project.media[currentMediaIndex];
+
+  return (
+    <div
+      ref={modalRef}
+      onClick={handleBackdropClick}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+      data-testid="project-modal-overlay"
+    >
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-fade-in" />
+
+      {/* Modal Container */}
+      <div
+        ref={contentRef}
+        className="relative w-full max-w-5xl max-h-[90vh] bg-gray-900 rounded-2xl overflow-hidden border border-gray-700 shadow-2xl shadow-blue-500/10 animate-modal-in"
+        data-testid="project-modal-content"
+      >
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 p-2 bg-gray-800/80 hover:bg-gray-700 rounded-full transition-all duration-200 hover:scale-110 group"
+          data-testid="project-modal-close"
+          aria-label="Close modal"
+        >
+          <X size={24} className="text-gray-400 group-hover:text-white transition-colors" />
+        </button>
+
+        {/* Scrollable Content */}
+        <div className="overflow-y-auto max-h-[90vh] custom-scrollbar">
+            
+        {/* Media Section */}
+        <div className="relative w-full flex items-center justify-center rounded-lg border border-gray-700 p-4">
+        {project.media.length > 0 ? (
+            <>
+            {currentMedia.type === 'image' ? (
+                <img
+                src={currentMedia.url}
+                alt={currentMedia.caption || 'Project Screenshot'}
+                className="rounded-lg"
+                style={{ width: 'auto', height: 'auto', maxWidth: '90vw', maxHeight: '80vh' }}
+                />
+            ) : (
+                <div className="relative flex items-center justify-center w-full" style={{ maxHeight: '80vh' }}>
+                <video
+                    ref={videoRef}
+                    src={currentMedia.url}
+                    className="rounded-lg"
+                    style={{ width: 'auto', height: 'auto', maxWidth: '90vw', maxHeight: '80vh' }}
+                    loop
+                    muted
+                    autoPlay={isVideoPlaying}
+                />
+                <button
+                    onClick={toggleVideoPlay}
+                    className="absolute inset-0 flex items-center justify-center"
+                >
+                    {isVideoPlaying ? (
+                    <Pause size={60} className="text-blue-400 bg-black/30 rounded-full p-2" />
+                    ) : (
+                    <Play size={60} className="text-blue-400 bg-black/30 rounded-full p-2" />
+                    )}
+                </button>
+                </div>
+            )}
+
+            {/* Media Navigation */}
+            {project.media.length > 1 && (
+                <>
+                <button
+                    onClick={prevMedia}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-black/70 rounded-full transition-all hover:scale-110"
+                    aria-label="Previous media"
+                >
+                    <ChevronLeft size={24} className="text-white" />
+                </button>
+                <button
+                    onClick={nextMedia}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-black/70 rounded-full transition-all hover:scale-110"
+                    aria-label="Next media"
+                >
+                    <ChevronRight size={24} className="text-white" />
+                </button>
+
+                {/* Media Indicators */}
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
+                    {project.media.map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => {
+                        setCurrentMediaIndex(index);
+                        setIsVideoPlaying(false);
+                        }}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                        index === currentMediaIndex ? 'bg-blue-400 w-6' : 'bg-gray-500 hover:bg-gray-400'
+                        }`}
+                        aria-label={`Go to media ${index + 1}`}
+                    />
+                    ))}
+                </div>
+                </>
+            )}
+            </>
+        ) : (
+            <div className="flex flex-col items-center justify-center p-8 text-center">
+            <div className="w-24 h-24 mb-4 bg-gray-700 rounded-lg flex items-center justify-center">
+                <span className="text-4xl opacity-50">💻</span>
+            </div>
+            <p className="text-gray-400 text-sm">No media available</p>
+            </div>
+        )}
+        </div>
+
+
+
+
+          {/* Content Section */}
+          <div className="p-6 md:p-8">
+            {/* Header */}
+            <div className="mb-6">
+              <div className="flex items-start justify-between flex-wrap gap-4">
+                <h2 className="text-2xl md:text-3xl font-bold text-white" data-testid="project-modal-title">
+                  {project.title}
+                </h2>
+                {project.award && (
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
+                    <Award size={16} className="text-yellow-500" />
+                    <span className="text-yellow-400 text-sm font-medium">{project.award}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Meta Info */}
+              <div className="flex flex-wrap items-center gap-4 mt-4 text-sm text-gray-400">
+                <div className="flex items-center gap-2">
+                  <Users size={16} className="text-blue-400" />
+                  <span>{project.collaborators}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar size={16} className="text-blue-400" />
+                  <span>{project.dates}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Overview */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="w-1 h-5 bg-blue-500 rounded-full"></span>
+                Overview
+              </h3>
+              <p className="text-gray-300 leading-relaxed" data-testid="project-modal-overview">
+                {project.overview}
+              </p>
+            </div>
+
+            {/* Key Features */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="w-1 h-5 bg-blue-500 rounded-full"></span>
+                Key Features & Achievements
+              </h3>
+              <ul className="space-y-2" data-testid="project-modal-features">
+                {project.keyFeatures.map((feature, index) => (
+                  <li key={index} className="flex items-start gap-3 text-gray-300">
+                    <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Technologies */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="w-1 h-5 bg-blue-500 rounded-full"></span>
+                Technologies Used
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {project.technologies.map((tech, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1.5 bg-gray-800 text-blue-400 text-sm rounded-lg border border-gray-700 hover:border-blue-500/50 transition-colors"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Links */}
+            <div className="flex flex-wrap gap-4 pt-4 border-t border-gray-800">
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-all duration-200 hover:scale-105 group"
+                data-testid="project-modal-github"
+              >
+                <Github size={18} className="group-hover:text-blue-400 transition-colors" />
+                <span>View on GitHub</span>
+                <ExternalLink size={14} className="opacity-50" />
+              </a>
+              {project.demo && (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-all duration-200 hover:scale-105"
+                  data-testid="project-modal-demo"
+                >
+                  <span>Live Demo</span>
+                  <ExternalLink size={14} />
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProjectModal;

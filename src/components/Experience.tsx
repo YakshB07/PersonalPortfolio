@@ -28,10 +28,11 @@ const Experience = () => {
       title: 'Programming Lead & Operator',
       organization: 'FIRST Robotics Teams 4903 & 1229',
       achievements: [
-        'Programmed swerve drive, turret, shooters, and robotic arm in C++',
-        'Designed 4 autonomous routines → reduced cycle times 30%',
-        'Implemented AprilTag auto-align → ±3 cm accuracy',
-        'Competed in 12+ official matches',
+        'Led robot software development in C++, programming advanced subsystems including swerve drive, turret targeting, and multi-joint robotic arm control',
+        'Designed and tested 5+ autonomous routines using trajectory planning and sensor fusion, reducing match cycle times by 30%',
+        'Implemented AprilTag-based vision auto-alignment with ±3 cm accuracy using camera calibration and PID control',
+        'Integrated gyroscopes, encoders, and vision systems for real-time positional tracking and field-relative control',
+        "Competed in 40+ official matches as team's Co-Pilot, making real-time strategic and mechanical adjustments under pressure",
       ],
     },
     {
@@ -39,9 +40,12 @@ const Experience = () => {
       title: 'Research Assistant Intern',
       organization: 'University of Windsor',
       achievements: [
-        'Stabilized 3-DOF drone and programmed robotic arm for automated pick-and-place',
-        'Improved workflow throughput by 30%, achieved 95% accuracy',
-        'Trained TensorFlow models and designed the automation system with a partner',
+        'Stabilized a 3-DOF drone using PID controllers in MATLAB with real-time feedback tuning, overshoot reduction, and disturbance compensation',
+        'Programmed a robotic arm for automated pick-and-place operations using inverse kinematics and trajectory planning algorithms',
+        'Designed and built an automated conveyor-based sorting system using a camera, computer vision model, and robotic arm to classify and separate ripe vs. rotten tomatoes',
+        'Integrated TensorFlow object detection with real-time image processing to trigger robotic sorting actions with high accuracy',
+        'Improved full-system workflow throughput by 30% while achieving 95% classification and placement accuracy through calibration and optimization',
+        'Collaborated on complete automation system integration, connecting mechanical, vision, and control subsystems into one synchronized pipeline',
       ],
     },
     {
@@ -49,10 +53,13 @@ const Experience = () => {
       title: 'Course Developer',
       organization: 'OBOTZ Robotics & Coding',
       achievements: [
-        'Designed Scratch programming curriculum for children 8–13',
-        'Created interactive lessons and activities for problem-solving and coding fundamentals',
+        'Designed structured Scratch programming curriculum for students aged 8–13, covering logic, loops, conditionals, and event-driven programming',
+        'Developed interactive coding challenges and project-based learning activities to strengthen problem-solving skills',
+        'Created beginner-friendly robotics and automation concepts to bridge visual programming with real-world applications',
+        'Mentored students through guided debugging sessions and hands-on coding demonstrations',
       ],
     },
+
   ];
 
   return (
