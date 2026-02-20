@@ -67,7 +67,7 @@ const Contact = () => {
       </div>
 
       <footer className="mt-20 pt-8 border-t border-gray-800 text-center text-gray-500">
-        <p>&copy; 2024 Yaksh Butani. All rights reserved.</p>
+        <p>&copy; 2026 Yaksh Butani. All rights reserved.</p>
       </footer>
     </section>
   );

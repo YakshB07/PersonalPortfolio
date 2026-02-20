@@ -45,9 +45,9 @@ const Projects = () => {
       github: 'https://github.com/YakshB07/Apple-website',
       demo: '',
       media: [
-        { type: 'image', url: '/apple1.png', caption: 'Apple Website Clone - Homepage' },
-        { type: 'image', url: '/apple2.png', caption: 'Product Section with Animations' },
-        { type: 'image', url: '/apple3.png', caption: 'Responsive Mobile View' },
+        { type: 'image', url: '/apple1.png'},
+        { type: 'image', url: '/apple2.png'},
+        { type: 'image', url: '/apple3.png'},
       ],
 
     },
@@ -69,9 +69,9 @@ const Projects = () => {
       github: 'https://github.com/YakshB07/OWP-Object-Detection-Model',
       award: 'Hackathon Winner',
       media: [
-        { type: 'image', url: '', caption: 'AI Model Detection Interface' },
-        { type: 'image', url: '', caption: 'Website Dashboard' },
-        { type: 'image', url: '', caption: 'Live Detection Demo' },
+        { type: 'image', url: '/plastic1.png'},
+        { type: 'image', url: '/plastic2.png'},
+        { type: 'image', url: '/plastic4.png'},
       ],
     },
     {
@@ -91,9 +91,9 @@ const Projects = () => {
       technologies: ['Java', 'Processing', 'Game Design', 'OOP'],
       github: 'https://github.com/YakshB07',
       media: [
-        { type: 'image', url: '/godofwar1.png', caption: 'Gameplay Screenshot - Combat' },
-        { type: 'image', url: '/godofwar2.png', caption: 'Character Sprites & Assets' },
-        { type: 'video', url: '/godofwar3.mp4', caption: 'Gameplay Demo' },
+        { type: 'image', url: '/godofwar1.png'},
+        { type: 'image', url: '/godofwar2.png'},
+        { type: 'video', url: '/godofwar3.mp4'},
       ],
     },
     {
@@ -113,9 +113,9 @@ const Projects = () => {
       technologies: ['Python', 'AI/ML', 'Pathfinding Algorithms', 'Pygame'],
       github: 'https://github.com/YakshB07/CR-Grade11FSE',
       media: [
-        { type: 'image', url: '/clash1.png', caption: 'Game Board Layout' },
-        { type: 'image', url: '/clash2.png', caption: 'AI Path Planning Visualization' },
-        { type: 'image', url: '/clash3.png', caption: 'Gameplay with AI Opponent' },
+        { type: 'image', url: '/clash1.png'},
+        { type: 'image', url: '/clash2.png'},
+        { type: 'image', url: '/clash3.png'},
       ],
     },
     {
@@ -135,8 +135,8 @@ const Projects = () => {
       technologies: ['Arduino', 'C++', 'Electronics', 'Circuit Design'],
       github: 'https://github.com/YakshB07/4-way-traffic-light',
       media: [
-        { type: 'image', url: '/traffic1.png', caption: 'Circuit Design & Wiring' },
-        { type: 'image', url: '/traffic2.png', caption: 'Final Assembly' },
+        { type: 'image', url: '/traffic1.png'},
+        { type: 'image', url: '/traffic2.png'},
       ],
     },
     {
@@ -157,9 +157,9 @@ const Projects = () => {
       technologies: ['MATLAB', 'Control Systems', 'Robotics', 'PID Controllers', 'Signal Processing'],
       github: 'https://github.com/YakshB07',
       media: [
-        { type: 'video', url: '3dof3.mp4', caption: 'Drone Stabilization Demo' },
-        { type: 'image', url: '3dof.JPEG', caption: 'MATLAB Control Interface' },
-        { type: 'image', url: '3dof2.JPEG', caption: 'PID Tuning Results' },
+        { type: 'image', url: '/3dof.JPEG'},
+        { type: 'image', url: '/3dof2.JPEG'},
+        { type: 'video', url: '/3dof3.mp4'}
       ],
     },
   ];
@@ -193,12 +193,26 @@ const Projects = () => {
               >
                 {/* Card Image/Thumbnail */}
                 <div className="h-48 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center relative overflow-hidden">
-                  <div className="text-6xl opacity-20 group-hover:scale-110 transition-transform duration-300">💻</div>
+                  {/* Show actual thumbnail if available */}
+                  {project.media[0]?.url ? (
+                    <img 
+                      src={project.media[0].url} 
+                      alt={project.title}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center">
+                      <svg className="w-16 h-16 text-gray-600 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                      </svg>
+                    </div>
+                  )}
                   
                   {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/20 transition-all duration-300 flex items-center justify-center">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2 bg-black/50 px-4 py-2 rounded-full">
-                      <Eye size={18} className="text-white" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/10 transition-all duration-300 flex items-center justify-center">
+                    <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 flex items-center gap-2 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10">
+                      <Eye size={16} className="text-blue-400" />
                       <span className="text-white text-sm font-medium">View Details</span>
                     </div>
                   </div>

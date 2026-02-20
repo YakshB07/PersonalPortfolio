@@ -25,12 +25,12 @@ const Awards = () => {
   const awards = [
     {
       title: 'DECA Ontario Provincial Champion',
-      description: '2× Winner',
+      description: '2× Champion',
       icon: <Trophy size={32} />,
     },
     {
       title: 'MasseyHacks Hackathon Winner',
-      description: 'First Place',
+      description: 'Best Beginner',
       icon: <Award size={32} />,
     },
   ];
