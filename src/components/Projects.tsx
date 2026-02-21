@@ -1,6 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 import { ExternalLink, Award, Eye } from 'lucide-react';
 import ProjectModal, { ProjectDetail } from './ProjectModal';
+import apple1 from '../assets/apple1.png';
+import apple2 from '../assets/apple2.png';
+import apple3 from '../assets/apple3.png';
+import dof from '../assets/dof.png';
+import dof2 from '../assets/dof2.png';
+import dof3 from '../assets/dof3.mp4';
+import clash from '../assets/clash1.png';
+import clash2 from '../assets/clash2.png';
+import clash3 from '../assets/clash3.png';
+import godofwar1 from '../assets/godofwar1.png';
+import godofwar2 from '../assets/godofwar2.png';
+import godofwar3 from '../assets/godofwar3.mp4';
+import traffic1 from '../assets/traffic1.png'
+import traffic2 from '../assets/traffic2.png'
+import plastic1 from '../assets/plastic1.png';
+import plastic2 from '../assets/plastic2.png';
+import plastic4 from '../assets/plastic4.png';
+
+
 
 const Projects = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -45,9 +64,9 @@ const Projects = () => {
       github: 'https://github.com/YakshB07/Apple-website',
       demo: '',
       media: [
-        { type: 'image', url: '/apple1.png'},
-        { type: 'image', url: '/apple2.png'},
-        { type: 'image', url: '/apple3.png'},
+        { type: 'image', url: apple1},
+        { type: 'image', url: apple2},
+        { type: 'image', url: apple3},
       ],
 
     },
@@ -69,9 +88,9 @@ const Projects = () => {
       github: 'https://github.com/YakshB07/OWP-Object-Detection-Model',
       award: 'Hackathon Winner',
       media: [
-        { type: 'image', url: '/plastic1.png'},
-        { type: 'image', url: '/plastic2.png'},
-        { type: 'image', url: '/plastic4.png'},
+        { type: 'image', url: plastic1},
+        { type: 'image', url: plastic2},
+        { type: 'image', url: plastic4},
       ],
     },
     {
@@ -91,9 +110,9 @@ const Projects = () => {
       technologies: ['Java', 'Processing', 'Game Design', 'OOP'],
       github: 'https://github.com/YakshB07',
       media: [
-        { type: 'image', url: '/godofwar1.png'},
-        { type: 'image', url: '/godofwar2.png'},
-        { type: 'video', url: '/godofwar3.mp4'},
+        { type: 'image', url: godofwar1},
+        { type: 'image', url: godofwar2},
+        { type: 'video', url: godofwar3},
       ],
     },
     {
@@ -113,9 +132,9 @@ const Projects = () => {
       technologies: ['Python', 'AI/ML', 'Pathfinding Algorithms', 'Pygame'],
       github: 'https://github.com/YakshB07/CR-Grade11FSE',
       media: [
-        { type: 'image', url: '/clash1.png'},
-        { type: 'image', url: '/clash2.png'},
-        { type: 'image', url: '/clash3.png'},
+        { type: 'image', url: clash},
+        { type: 'image', url: clash2},
+        { type: 'image', url: clash3},
       ],
     },
     {
@@ -135,8 +154,8 @@ const Projects = () => {
       technologies: ['Arduino', 'C++', 'Electronics', 'Circuit Design'],
       github: 'https://github.com/YakshB07/4-way-traffic-light',
       media: [
-        { type: 'image', url: '/traffic1.png'},
-        { type: 'image', url: '/traffic2.png'},
+        { type: 'image', url: traffic1},
+        { type: 'image', url: traffic2},
       ],
     },
     {
@@ -157,9 +176,9 @@ const Projects = () => {
       technologies: ['MATLAB', 'Control Systems', 'Robotics', 'PID Controllers', 'Signal Processing'],
       github: 'https://github.com/YakshB07',
       media: [
-        { type: 'image', url: '/3dof.JPEG'},
-        { type: 'image', url: '/3dof2.JPEG'},
-        { type: 'video', url: '/3dof3.mp4'}
+        { type: 'image', url: dof},
+        { type: 'image', url: dof2},
+        { type: 'video', url: dof3}
       ],
     },
   ];
