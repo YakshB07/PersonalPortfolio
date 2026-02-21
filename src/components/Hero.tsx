@@ -28,7 +28,7 @@ const Hero = () => {
             Yaksh Butani
           </h1>
           <h2 className="text-2xl md:text-3xl text-gray-300 mb-6 font-light">
-            Aspiring Mechatronics & Systems Engineer
+            Aspiring Mechatronics & Control Systems Engineer
           </h2>
           <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto">
             I build AI-driven systems, robots, and websites.
