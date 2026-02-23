@@ -46,6 +46,52 @@ const Projects = () => {
 
   const projectsData: ProjectDetail[] = [
     {
+      id: 'drone-stabilization',
+      title: '3-DOF Drone Stabilization',
+      collaborators: 'Solo project',
+      dates: 'June 24 – July 4, 2024',
+      overview: 'Stabilized a 3-DOF drone in mid-air using MATLAB and PID controllers, focusing on precise positioning and responsive flight control.',
+      keyFeatures: [
+        'Tuned PID controllers for stable flight with minimal overshoot',
+        'Real-time MATLAB simulation integrated with hardware feedback',
+        'Maintained drone at desired X, Y, Z coordinates with high accuracy',
+        'Logged flight data for performance evaluation and error analysis',
+        'Adjusted controller gains to handle drift, wind, and minor disturbances',
+        'Video demonstration showing precise hovering and stability',
+        'Fully documented process for reproducibility',
+      ],
+      technologies: ['MATLAB', 'Control Systems', 'Robotics', 'PID Controllers', 'Signal Processing'],
+      github: 'https://github.com/YakshB07',
+      media: [
+        { type: 'image', url: dof},
+        { type: 'image', url: dof2},
+        { type: 'video', url: dof3}
+      ],
+    },    
+    {
+      id: 'plastic-detection',
+      title: 'Plastic Detection AI & Website',
+      collaborators: 'Group Project',
+      dates: 'May 5, 2024',
+      overview: 'Built an AI model to detect plastic underwater and created a website to visualize its functionality, aiming to aid cleanup efforts and potential AUV integration.',
+      keyFeatures: [
+        'Real-time plastic detection using YOLO and TensorFlow',
+        'Data preprocessing and augmentation for improved accuracy',
+        'Achieved ~80% detection accuracy on underwater images',
+        'Website displays live AI detection with interactive visualization',
+        'Team collaboration for combining AI model and web interface',
+        'Awarded first place at a hackathon for innovation and impact',
+      ],
+      technologies: ['Python', 'TensorFlow', 'YOLO', 'Web Development', 'OpenCV', 'NumPy'],
+      github: 'https://github.com/YakshB07/OWP-Object-Detection-Model',
+      award: 'Hackathon Winner',
+      media: [
+        { type: 'image', url: plastic1},
+        { type: 'image', url: plastic2},
+        { type: 'image', url: plastic4},
+      ],
+    },    
+    {
       id: 'apple-website',
       title: 'Apple Website Clone',
       collaborators: 'Solo project',
@@ -69,29 +115,6 @@ const Projects = () => {
         { type: 'image', url: apple3},
       ],
 
-    },
-    {
-      id: 'plastic-detection',
-      title: 'Plastic Detection AI & Website',
-      collaborators: 'Group Project',
-      dates: 'May 5, 2024',
-      overview: 'Built an AI model to detect plastic underwater and created a website to visualize its functionality, aiming to aid cleanup efforts and potential AUV integration.',
-      keyFeatures: [
-        'Real-time plastic detection using YOLO and TensorFlow',
-        'Data preprocessing and augmentation for improved accuracy',
-        'Achieved ~80% detection accuracy on underwater images',
-        'Website displays live AI detection with interactive visualization',
-        'Team collaboration for combining AI model and web interface',
-        'Awarded first place at a hackathon for innovation and impact',
-      ],
-      technologies: ['Python', 'TensorFlow', 'YOLO', 'Web Development', 'OpenCV', 'NumPy'],
-      github: 'https://github.com/YakshB07/OWP-Object-Detection-Model',
-      award: 'Hackathon Winner',
-      media: [
-        { type: 'image', url: plastic1},
-        { type: 'image', url: plastic2},
-        { type: 'image', url: plastic4},
-      ],
     },
     {
       id: 'god-of-war',
@@ -156,29 +179,6 @@ const Projects = () => {
       media: [
         { type: 'image', url: traffic1},
         { type: 'image', url: traffic2},
-      ],
-    },
-    {
-      id: 'drone-stabilization',
-      title: '3-DOF Drone Stabilization',
-      collaborators: 'Solo project',
-      dates: 'June 24 – July 4, 2024',
-      overview: 'Stabilized a 3-DOF drone in mid-air using MATLAB and PID controllers, focusing on precise positioning and responsive flight control.',
-      keyFeatures: [
-        'Tuned PID controllers for stable flight with minimal overshoot',
-        'Real-time MATLAB simulation integrated with hardware feedback',
-        'Maintained drone at desired X, Y, Z coordinates with high accuracy',
-        'Logged flight data for performance evaluation and error analysis',
-        'Adjusted controller gains to handle drift, wind, and minor disturbances',
-        'Video demonstration showing precise hovering and stability',
-        'Fully documented process for reproducibility',
-      ],
-      technologies: ['MATLAB', 'Control Systems', 'Robotics', 'PID Controllers', 'Signal Processing'],
-      github: 'https://github.com/YakshB07',
-      media: [
-        { type: 'image', url: dof},
-        { type: 'image', url: dof2},
-        { type: 'video', url: dof3}
       ],
     },
   ];
