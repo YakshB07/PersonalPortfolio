@@ -1,89 +1,65 @@
-import { Github, Linkedin, Mail, ArrowDown } from 'lucide-react';
+import { contact, education, LAST_UPDATED, profile, RESUME_PDF } from '../data/resume';
 
-const Hero = () => {
-  const scrollToProjects = () => {
-    const element = document.querySelector('#projects');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+const TITLE_BLOCK = [
+  { label: 'Drawn by', value: profile.name },
+  { label: 'Discipline', value: profile.discipline },
+  { label: 'Institution', value: education.school },
+  { label: 'Location', value: profile.location },
+  { label: 'Rev', value: LAST_UPDATED },
+  { label: 'Sheet', value: '1 / 1' },
+];
 
-  const scrollToContact = () => {
-    const element = document.querySelector('#contact');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
+export default function Hero() {
   return (
-    <section
-      id="home"
-      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black text-white relative overflow-hidden"
-    >
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent"></div>
-
-      <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-        <div className="animate-fade-in">
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
-            Yaksh Butani
-          </h1>
-          <h2 className="text-2xl md:text-3xl text-gray-300 mb-6 font-light">
-            Aspiring Mechatronics & Control Systems Engineer
-          </h2>
-          <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            I build AI-driven systems, robots, and websites.
+    <section id="top" aria-labelledby="hero-name" className="grid-paper border-b border-ink/15 pt-14">
+      <div className="sheet grid gap-8 pb-10 pt-10 md:pt-20 lg:grid-cols-12 lg:gap-x-12 lg:pb-16">
+        <div className="lg:col-span-9">
+          <p className="label">
+            {education.degree} · {education.school}
           </p>
+          <h1 id="hero-name" className="mt-3 text-5xl font-semibold leading-[0.95] tracking-tight sm:text-7xl lg:text-[6.5rem]">
+            {profile.name}
+          </h1>
+          <p className="mt-6 max-w-3xl text-xl leading-snug text-ink sm:text-3xl">{profile.headline}</p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <button
-              onClick={scrollToProjects}
-              className="px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-all duration-300 hover:scale-105 shadow-lg"
-            >
+          <p className="mt-8 max-w-xl border-l-2 border-accent pl-3 text-base text-ink-soft">{profile.availability}</p>
+          <div className="mt-6 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+            <a href={RESUME_PDF} download className="btn-primary col-span-2">
+              Download Resume
+            </a>
+            <a href="#projects" className="btn-ghost">
               View Projects
-            </button>
-            <button
-              onClick={scrollToContact}
-              className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-black transition-all duration-300 hover:scale-105"
-            >
-              Contact Me
-            </button>
-          </div>
-
-          <div className="flex justify-center space-x-6">
-            <a
-              href="https://github.com/YakshB07"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
-              aria-label="GitHub"
-            >
-              <Github size={28} />
             </a>
-            <a
-              href="https://linkedin.com/in/yaksh-butani-813973328"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin size={28} />
-            </a>
-            <a
-              href="mailto:yakshbutani07@gmail.com"
-              className="text-gray-400 hover:text-white transition-colors"
-              aria-label="Email"
-            >
-              <Mail size={28} />
+            <a href={`mailto:${contact.email}`} className="btn-ghost">
+              Email Me
             </a>
           </div>
         </div>
+
+        {profile.photo && (
+          <div className="lg:col-span-3 lg:self-end">
+            <img
+              src={profile.photo}
+              alt={`Photo of ${profile.name}`}
+              width={480}
+              height={600}
+              className="aspect-[4/5] w-48 border border-ink object-cover lg:w-full"
+            />
+          </div>
+        )}
       </div>
 
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <ArrowDown className="text-gray-400" size={32} />
+      {/* Title block, as in the corner of a drawing sheet. */}
+      <div className="sheet pb-8">
+        <dl className="grid grid-cols-2 border-l border-t border-ink sm:grid-cols-3 lg:grid-cols-6">
+          {TITLE_BLOCK.map((cell) => (
+            <div key={cell.label} className="border-b border-r border-ink bg-paper px-3 py-2">
+              <dt className="label text-[0.62rem]">{cell.label}</dt>
+              <dd className="truncate font-mono text-sm">{cell.value}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );
-};
-
-export default Hero;
+}

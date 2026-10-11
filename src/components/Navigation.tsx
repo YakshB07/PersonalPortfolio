@@ -1,91 +1,67 @@
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useState } from 'react';
+import { profile } from '../data/resume';
 
-const Navigation = () => {
+const NAV_LINKS = [
+  { href: '#experience', label: 'Experience' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#contact', label: 'Contact' },
+];
+
+export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navLinks = [
-    { href: '#home', label: 'Home' },
-    { href: '#projects', label: 'Projects' },
-    { href: '#skills', label: 'Skills' },
-    { href: '#experience', label: 'Experience' },
-    { href: '#awards', label: 'Awards' },
-    { href: '#contact', label: 'Contact' },
-  ];
-
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false);
-    }
-  };
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-black/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          <a
-            href="#home"
-            onClick={(e) => scrollToSection(e, '#home')}
-            className="text-2xl font-bold text-white hover:text-blue-400 transition-colors"
-          >
-            YB
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-ink/15 bg-paper/95 backdrop-blur-[2px]">
+      <nav aria-label="Main" className="sheet flex h-14 items-center justify-between gap-4">
+        <a href="#top" className="font-mono text-sm font-medium tracking-tight text-ink hover:text-accent-ink">
+          {profile.name}
+          <span className="ml-3 hidden text-ink-faint lg:inline">/ Robotics &amp; Controls</span>
+        </a>
+
+        <div className="flex items-center gap-1 sm:gap-2">
+          <ul className="hidden items-center md:flex">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className="px-3 py-2 font-mono text-xs uppercase tracking-wider text-ink-soft hover:text-ink"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <a href="#resume" className="btn-primary min-h-[36px] px-3 py-1.5 text-xs">
+            Resume
           </a>
 
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => scrollToSection(e, link.href)}
-                className="text-gray-300 hover:text-white transition-colors font-medium"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-
           <button
-            className="md:hidden text-white"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
+            type="button"
+            className="min-h-[36px] px-2 font-mono text-xs uppercase tracking-wider text-ink md:hidden"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
+            onClick={() => setIsMenuOpen((open) => !open)}
           >
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            {isMenuOpen ? 'Close' : 'Menu'}
           </button>
         </div>
+      </nav>
 
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 space-y-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => scrollToSection(e, link.href)}
-                className="block text-gray-300 hover:text-white transition-colors font-medium"
-              >
+      {isMenuOpen && (
+        <ul id="mobile-menu" className="sheet border-t border-ink/15 pb-3 md:hidden">
+          {NAV_LINKS.map((link, i) => (
+            <li key={link.href} className="border-b border-ink/10 last:border-0">
+              <a href={link.href} onClick={closeMenu} className="flex items-baseline gap-3 py-3 text-lg">
+                <span className="font-mono text-xs text-accent-ink">0{i + 1}</span>
                 {link.label}
               </a>
-            ))}
-          </div>
-        )}
-      </div>
-    </nav>
+            </li>
+          ))}
+        </ul>
+      )}
+    </header>
   );
-};
-
-export default Navigation;
+}

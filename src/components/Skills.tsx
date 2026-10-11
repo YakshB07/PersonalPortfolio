@@ -1,92 +1,28 @@
-import { useEffect, useRef } from 'react';
-import { Code, Wrench, Lightbulb } from 'lucide-react';
+import { skills } from '../data/resume';
+import { SectionHeader } from './ui/SectionHeader';
 
-const Skills = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const cards = sectionRef.current?.querySelectorAll('.skill-card');
-    cards?.forEach((card) => observer.observe(card));
-
-    return () => observer.disconnect();
-  }, []);
-
-  const skillCategories = [
-    {
-      icon: <Code size={32} />,
-      title: 'Programming',
-      skills: ['C++', 'Java', 'Python', 'HTML', 'CSS', 'JavaScript'],
-    },
-    {
-      icon: <Wrench size={32} />,
-      title: 'Frameworks & Tools',
-      skills: [
-        'React',
-        'Tailwind CSS',
-        'GSAP',
-        'TensorFlow',
-        'YOLO',
-        'MATLAB',
-        'Unity',
-        'Git',
-      ],
-    },
-    {
-      icon: <Lightbulb size={32} />,
-      title: 'Other',
-      skills: [
-        'AI/ML',
-        'Web Development',
-        'Robotics Coding',
-        'Electrical Wiring',
-      ],
-    },
-  ];
-
+export default function Skills() {
   return (
-    <section id="skills" className="py-20 bg-black text-white" ref={sectionRef}>
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">Skills</h2>
-        <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
-          Technical expertise spanning software development, robotics, and AI
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {skillCategories.map((category, index) => (
-            <div
-              key={index}
-              className="skill-card opacity-0 bg-gray-900 rounded-xl p-8 border border-gray-800 hover:border-blue-500 transition-all duration-300"
-            >
-              <div className="text-blue-400 mb-4">{category.icon}</div>
-              <h3 className="text-2xl font-bold mb-6">{category.title}</h3>
-              <div className="space-y-3">
-                {category.skills.map((skill, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center space-x-3 text-gray-300"
-                  >
-                    <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                    <span>{skill}</span>
-                  </div>
+    <section id="skills" aria-labelledby="skills-heading" className="border-y border-ink/15 bg-paper-deep/60 py-14 md:py-20">
+      <div className="sheet">
+        <SectionHeader index="04" title="Skills" headingId="skills-heading" />
+        <div className="grid border-l border-t border-ink sm:grid-cols-2 lg:grid-cols-4">
+          {skills.map((group, i) => (
+            <div key={group.label} className="border-b border-r border-ink p-5">
+              <h3 className={`font-mono text-xs uppercase tracking-[0.12em] ${i === 0 ? 'text-accent-ink' : 'text-ink-soft'}`}>
+                {group.label}
+              </h3>
+              <ul className="mt-4 space-y-1.5">
+                {group.items.map((item) => (
+                  <li key={item} className={i === 0 ? 'text-lg font-medium' : 'text-base'}>
+                    {item}
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default Skills;
+}

@@ -1,63 +1,23 @@
-import { useEffect, useRef } from 'react';
-import { Award, Trophy } from 'lucide-react';
+import { awards } from '../data/resume';
+import { SectionHeader } from './ui/SectionHeader';
 
-const Awards = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const cards = sectionRef.current?.querySelectorAll('.award-card');
-    cards?.forEach((card) => observer.observe(card));
-
-    return () => observer.disconnect();
-  }, []);
-
-  const awards = [
-    {
-      title: 'DECA Ontario Provincial Champion',
-      description: '2× Champion',
-      icon: <Trophy size={32} />,
-    },
-    {
-      title: 'MasseyHacks Hackathon Winner',
-      description: 'Best Beginner',
-      icon: <Award size={32} />,
-    },
-  ];
-
+export default function Awards() {
   return (
-    <section id="awards" className="py-20 bg-black text-white" ref={sectionRef}>
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">Awards</h2>
-        <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
-          Recognition for excellence in competitions and hackathons
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {awards.map((award, index) => (
-            <div
-              key={index}
-              className="award-card opacity-0 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-8 border border-gray-700 hover:border-yellow-500 transition-all duration-300 hover:transform hover:scale-105"
-            >
-              <div className="text-yellow-500 mb-4">{award.icon}</div>
-              <h3 className="text-2xl font-bold mb-2">{award.title}</h3>
-              <p className="text-gray-400">{award.description}</p>
+    <section id="awards" aria-labelledby="awards-heading" className="sheet py-14 md:py-20">
+      <SectionHeader index="05" title="Awards & Scholarships" headingId="awards-heading" />
+      <ol className="md:ml-[25%]">
+        {awards.map((award, i) => (
+          <li key={award.title} className="grid grid-cols-[2.5rem_1fr] items-baseline gap-x-3 border-b border-ink/30 py-4 first:border-t first:border-ink">
+            <span className="font-mono text-xs text-ink-faint">{String(i + 1).padStart(2, '0')}</span>
+            <div className="flex flex-wrap items-baseline justify-between gap-x-6">
+              <p className="text-xl font-medium">{award.title}</p>
+              <p className="font-mono text-sm text-accent-ink">
+                {[award.detail, award.year].filter(Boolean).join(' · ')}
+              </p>
             </div>
-          ))}
-        </div>
-      </div>
+          </li>
+        ))}
+      </ol>
     </section>
   );
-};
-
-export default Awards;
+}

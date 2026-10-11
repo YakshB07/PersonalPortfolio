@@ -1,102 +1,132 @@
-import { useEffect, useRef } from 'react';
-import { Briefcase, GraduationCap, Users } from 'lucide-react';
+import { useLayoutEffect, useRef } from 'react';
+import { experience, findProject, type Role } from '../data/resume';
+import { gsap, MOTION_OK } from '../lib/gsap';
+import CycleTimeStat from './CycleTimeStat';
+import { Emphasized } from './ui/Emphasized';
+import { SectionHeader } from './ui/SectionHeader';
 
-const Experience = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
+interface ExperienceProps {
+  onOpenProject: (id: string) => void;
+}
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+function RoleMeta({ role }: { role: Role }) {
+  return (
+    <div className="font-mono text-xs leading-relaxed text-ink-soft md:pt-1.5 md:text-right">
+      {role.dates && <p className="text-ink">{role.dates}</p>}
+      {role.location && <p>{role.location}</p>}
+      {role.featured && <p className="mt-1 text-accent-ink">Most recent</p>}
+    </div>
+  );
+}
 
-    const cards = sectionRef.current?.querySelectorAll('.experience-card');
-    cards?.forEach((card) => observer.observe(card));
+function StatChips({ stats }: { stats: string[] }) {
+  return (
+    <ul className="mt-3 flex flex-wrap gap-1.5" aria-label="Key results">
+      {stats.map((stat) => (
+        <li key={stat} className="chip border-accent-ink/40 font-semibold text-accent-ink">
+          {stat}
+        </li>
+      ))}
+    </ul>
+  );
+}
 
-    return () => observer.disconnect();
-  }, []);
-
-  const experiences = [
-    {
-      icon: <Users size={28} />,
-      title: 'Programming Lead & Operator',
-      organization: 'FIRST Robotics Teams 4903 & 1229',
-      achievements: [
-        'Led robot software development in C++, programming advanced subsystems including swerve drive, turret targeting, and multi-joint robotic arm control',
-        'Designed and tested 5+ autonomous routines using trajectory planning and sensor fusion, reducing match cycle times by 30%',
-        'Implemented AprilTag-based vision auto-alignment with ±3 cm accuracy using camera calibration and PID control',
-        'Integrated gyroscopes, encoders, and vision systems for real-time positional tracking and field-relative control',
-        "Competed in 40+ official matches as team's Co-Pilot, making real-time strategic and mechanical adjustments under pressure",
-      ],
-    },
-    {
-      icon: <GraduationCap size={28} />,
-      title: 'Research Assistant Intern',
-      organization: 'University of Windsor',
-      achievements: [
-        'Stabilized a 3-DOF drone using PID controllers in MATLAB with real-time feedback tuning, overshoot reduction, and disturbance compensation',
-        'Programmed a robotic arm for automated pick-and-place operations using inverse kinematics and trajectory planning algorithms',
-        'Designed and built an automated conveyor-based sorting system using a camera, computer vision model, and robotic arm to classify and separate ripe vs. rotten tomatoes',
-        'Integrated TensorFlow object detection with real-time image processing to trigger robotic sorting actions with high accuracy',
-        'Improved full-system workflow throughput by 30% while achieving 95% classification and placement accuracy through calibration and optimization',
-        'Collaborated on complete automation system integration, connecting mechanical, vision, and control subsystems into one synchronized pipeline',
-      ],
-    },
-    {
-      icon: <Briefcase size={28} />,
-      title: 'Course Developer',
-      organization: 'OBOTZ Robotics & Coding',
-      achievements: [
-        'Designed structured Scratch programming curriculum for students aged 8–13, covering logic, loops, conditionals, and event-driven programming',
-        'Developed interactive coding challenges and project-based learning activities to strengthen problem-solving skills',
-        'Created beginner-friendly robotics and automation concepts to bridge visual programming with real-world applications',
-        'Mentored students through guided debugging sessions and hands-on coding demonstrations',
-      ],
-    },
-
-  ];
+function RoleEntry({ role, onOpenProject }: { role: Role; onOpenProject: (id: string) => void }) {
+  const related = role.relatedProjectId ? findProject(role.relatedProjectId) : undefined;
 
   return (
-    <section id="experience" className="py-20 bg-gray-950 text-white" ref={sectionRef}>
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">Experience</h2>
-        <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
-          Leadership roles and professional experience in robotics, research, and education
-        </p>
+    <li className="timeline-entry relative grid gap-3 pb-12 md:grid-cols-12 md:gap-8">
+      <div className="pl-6 md:col-span-3 md:pl-0">
+        <RoleMeta role={role} />
+      </div>
 
-        <div className="space-y-8 max-w-4xl mx-auto">
-          {experiences.map((exp, index) => (
-            <div
-              key={index}
-              className="experience-card opacity-0 bg-gray-900 rounded-xl p-8 border border-gray-800 hover:border-blue-500 transition-all duration-300"
-            >
-              <div className="flex items-start space-x-4">
-                <div className="text-blue-400 flex-shrink-0 mt-1">{exp.icon}</div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-1">{exp.title}</h3>
-                  <p className="text-blue-400 mb-4 font-medium">{exp.organization}</p>
-                  <ul className="space-y-3">
-                    {exp.achievements.map((achievement, i) => (
-                      <li key={i} className="flex items-start space-x-3 text-gray-300">
-                        <span className="text-blue-400 mt-1.5">•</span>
-                        <span>{achievement}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+      <div className="relative pl-6 md:col-span-9 md:pl-8">
+        <span
+          aria-hidden="true"
+          className={`absolute left-[-5px] top-2 h-[11px] w-[11px] border-2 border-ink ${role.featured ? 'bg-accent' : 'bg-paper'}`}
+        />
+        <h3 className={role.featured ? 'text-2xl font-semibold md:text-4xl' : 'text-xl font-semibold md:text-2xl'}>
+          {role.title}
+        </h3>
+        <p className="mt-0.5 text-lg text-ink-soft">{role.company}</p>
+
+        {role.stats.length > 0 && <StatChips stats={role.stats} />}
+
+        <div className={role.featured ? 'mt-5 grid gap-6 xl:grid-cols-[minmax(0,1fr)_19rem] xl:gap-8' : 'mt-5'}>
+          {role.featured && (
+            <div className="xl:order-last">
+              <CycleTimeStat />
             </div>
-          ))}
+          )}
+          <ul className="max-w-3xl space-y-2.5 text-[0.98rem] leading-relaxed">
+            {role.bullets.map((bullet) => (
+              <li key={bullet} className="grid grid-cols-[1rem_1fr]">
+                <span aria-hidden="true" className="font-mono text-ink-faint">–</span>
+                <span>
+                  <Emphasized text={bullet} phrases={role.metrics} />
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
+
+        {related && (
+          <button
+            type="button"
+            onClick={() => onOpenProject(related.id)}
+            className="link mt-4 inline-flex min-h-[44px] items-center font-mono text-sm"
+          >
+            Also here: {related.title} →
+          </button>
+        )}
+      </div>
+    </li>
+  );
+}
+
+export default function Experience({ onOpenProject }: ExperienceProps) {
+  const listRef = useRef<HTMLOListElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
+    const mm = gsap.matchMedia();
+    mm.add(MOTION_OK, () => {
+      // The accent rule fills as you read down the timeline.
+      gsap.fromTo(
+        progressRef.current,
+        { scaleY: 0 },
+        { scaleY: 1, ease: 'none', scrollTrigger: { trigger: list, start: 'top 75%', end: 'bottom 75%', scrub: true } },
+      );
+      list.querySelectorAll('.timeline-entry').forEach((entry) => {
+        gsap.from(entry, {
+          x: -28,
+          opacity: 0,
+          duration: 0.7,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: entry, start: 'top 85%', once: true },
+        });
+      });
+    });
+    return () => mm.revert();
+  }, []);
+
+  return (
+    <section id="experience" aria-labelledby="experience-heading" className="sheet py-14 md:py-20">
+      <SectionHeader index="02" title="Experience" headingId="experience-heading" note="Newest first" />
+
+      <div className="relative">
+        {/* Timeline rule: grey track + accent progress. Offset matches the marker column. */}
+        <div aria-hidden="true" className="absolute bottom-12 top-2 left-0 w-px bg-ink/20 md:left-[calc(25%+0.5rem)]">
+          <div ref={progressRef} className="h-full w-full origin-top bg-accent" />
+        </div>
+        <ol ref={listRef}>
+          {experience.map((role) => (
+            <RoleEntry key={role.id} role={role} onOpenProject={onOpenProject} />
+          ))}
+        </ol>
       </div>
     </section>
   );
-};
-
-export default Experience;
+}

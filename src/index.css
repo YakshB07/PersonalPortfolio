@@ -1,3 +1,6 @@
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/jetbrains-mono';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,74 +8,81 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 4.5rem;
   }
 
   body {
-    @apply antialiased;
+    @apply bg-paper text-ink font-sans antialiased;
+  }
+
+  ::selection {
+    @apply bg-accent text-white;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-ink;
+    outline-style: solid;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-@layer utilities {
-  @keyframes fade-in {
+@layer components {
+  /* Mono label, e.g. "DWG NO." or a date. */
+  .label {
+    @apply font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink-soft;
+  }
+
+  .sheet {
+    @apply mx-auto w-full max-w-sheet px-4 sm:px-6 lg:px-10;
+  }
+
+  .chip {
+    @apply inline-flex items-center border border-ink/25 px-2 py-0.5 font-mono text-[0.72rem] leading-5 text-ink;
+  }
+
+  .btn {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 border px-5 py-2.5 font-mono text-sm font-medium uppercase tracking-wider transition-colors;
+  }
+  .btn-primary {
+    @apply btn border-accent-ink bg-accent-ink text-white hover:bg-ink hover:border-ink;
+  }
+  .btn-ghost {
+    @apply btn border-ink bg-transparent text-ink hover:bg-ink hover:text-paper;
+  }
+
+  .link {
+    @apply text-accent-ink underline decoration-1 underline-offset-[3px] hover:decoration-2;
+  }
+
+  @keyframes sheet-in {
     from {
       opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+      transform: translateY(12px);
     }
   }
-
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+  .animate-sheet-in {
+    animation: sheet-in 0.22s ease-out;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-sheet-in {
+      animation: none;
     }
   }
 
-  @keyframes modal-in {
-    from {
-      opacity: 0;
-      transform: scale(0.95) translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
-  }
-
-  .animate-fade-in {
-    animation: fade-in 1s ease-out forwards;
-  }
-
-  .animate-fade-in-up {
-    animation: fade-in-up 0.8s ease-out forwards;
-  }
-
-  .animate-modal-in {
-    animation: modal-in 0.3s ease-out forwards;
-  }
-
-  /* Custom scrollbar for modal */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(107, 114, 128, 0.5);
-    border-radius: 3px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(107, 114, 128, 0.7);
+  /* Faint blueprint grid, used only behind the hero. */
+  .grid-paper {
+    background-image: linear-gradient(to right, rgb(23 21 15 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(23 21 15 / 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
 }
