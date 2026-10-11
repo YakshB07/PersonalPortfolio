@@ -1,86 +1,9 @@
 import { projects, type Project } from '../data/resume';
-import { useTilt } from '../hooks/useTilt';
+import { CaseStudyCard } from './CaseStudyCard';
 import { SectionHeader } from './ui/SectionHeader';
-import { TechChips } from './ui/TechChips';
 
 interface ProjectsProps {
   onOpenProject: (id: string) => void;
-}
-
-interface CardProps {
-  project: Project;
-  index: number;
-  onOpen: (id: string) => void;
-  isLead?: boolean;
-}
-
-/** Whole card is clickable via the stretched button; tilt is applied to the outer article. */
-function CaseStudyCard({ project, index, onOpen, isLead = false }: CardProps) {
-  const tiltRef = useTilt<HTMLElement>();
-  const cs = project.caseStudy;
-
-  return (
-    <article
-      ref={tiltRef}
-      className={`group relative flex h-full flex-col border border-ink bg-paper transition-[transform,box-shadow] duration-200 ease-out will-change-transform hover:shadow-[6px_6px_0_0_rgb(23_21_15)] ${
-        ''
-      }`}
-    >
-      {project.thumb && (
-        <img
-          src={project.thumb}
-          alt=""
-          width={800}
-          height={500}
-          loading="lazy"
-          decoding="async"
-          className="aspect-[16/9] w-full border-b border-ink object-cover object-top"
-        />
-      )}
-
-      <div className={isLead ? 'flex flex-1 flex-col p-6 md:p-8' : 'flex flex-1 flex-col p-5'}>
-        <p className="label flex justify-between gap-2">
-          <span>Case study {String(index + 1).padStart(2, '0')}</span>
-          <span className="truncate">{project.tag}</span>
-        </p>
-        <h3 className={`mt-2 font-semibold tracking-tight ${isLead ? 'text-3xl md:text-4xl' : 'text-2xl'}`}>
-          {project.title}
-        </h3>
-
-        {cs && (
-          <dl className={`mt-5 space-y-3 text-[0.95rem] leading-snug ${isLead ? 'md:text-base' : ''}`}>
-            {isLead && (
-              <>
-                <div>
-                  <dt className="label">Problem</dt>
-                  <dd className="mt-0.5">{cs.problem}</dd>
-                </div>
-                <div>
-                  <dt className="label">What I built</dt>
-                  <dd className="mt-0.5">{cs.built}</dd>
-                </div>
-              </>
-            )}
-            <div>
-              <dt className="label">Result</dt>
-              <dd className="mt-0.5 font-medium text-accent-ink">{cs.result}</dd>
-            </div>
-          </dl>
-        )}
-
-        <div className="mt-auto pt-6">
-          <TechChips items={project.tech} />
-          <button
-            type="button"
-            onClick={() => onOpen(project.id)}
-            className="mt-5 inline-flex min-h-[44px] items-center font-mono text-sm font-medium text-accent-ink underline-offset-4 after:absolute after:inset-0 after:content-[''] group-hover:underline"
-          >
-            Open case study →<span className="sr-only">: {project.title}</span>
-          </button>
-        </div>
-      </div>
-    </article>
-  );
 }
 
 function ProjectRegister({ items, onOpen }: { items: Project[]; onOpen: (id: string) => void }) {

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { profile } from '../data/resume';
+import { Logo } from './ui/Logo';
 
 const NAV_LINKS = [
   { href: '#experience', label: 'Experience' },
@@ -15,7 +16,11 @@ export default function Navigation() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-ink/15 bg-paper/95 backdrop-blur-[2px]">
       <nav aria-label="Main" className="sheet flex h-14 items-center justify-between gap-4">
-        <a href="#top" className="font-mono text-sm font-medium tracking-tight text-ink hover:text-accent-ink">
+        <a
+          href="#top"
+          className="group flex items-center gap-2.5 font-mono text-sm font-medium tracking-tight text-ink hover:text-accent-ink"
+        >
+          <Logo className="h-7 w-7 shrink-0" />
           {profile.name}
           <span className="ml-3 hidden text-ink-faint lg:inline">/ Robotics &amp; Controls</span>
         </a>

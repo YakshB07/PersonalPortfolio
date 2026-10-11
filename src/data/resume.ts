@@ -55,6 +55,14 @@ export interface CaseStudy {
   problem: string;
   built: string;
   result: string;
+  /** Headline number pulled from `result`. Only set when the result actually states one. */
+  figure?: {
+    value: number;
+    suffix: string;
+    label: string;
+    /** The rest of the result, minus the number. */
+    note: string;
+  };
 }
 
 export interface Project {
@@ -94,6 +102,8 @@ export const RESUME_PDF = `${import.meta.env.BASE_URL}Yaksh_Butani_Resume.pdf`;
 export const profile = {
   name: 'Yaksh Butani',
   headline: 'Engineering student building robots end to end: controls, PLC logic, and vision.',
+  bio:
+    "Hi, I'm Yaksh. I study Engineering Science at Western University in London, Ontario. I'm most interested in robotics, controls, and embedded systems, especially the part where code actually makes something move. I like building things end to end, from the wiring and mechanical design to the software that runs them. Long term, I want to build robots and automation systems that do real work outside the lab.",
   availability:
     'Seeking Summer 2027 internships in robotics, controls & embedded systems. Based in London, ON, open to relocating.',
   discipline: 'Engineering Science',
@@ -241,6 +251,12 @@ export const projects: Project[] = [
       built:
         'A TensorFlow object detection model trained on an open-source underwater plastic dataset, with data augmentation and a reproducible training, evaluation, and deployment pipeline.',
       result: '96% detection accuracy, with potential applications for autonomous underwater vehicles (AUVs).',
+      figure: {
+        value: 96,
+        suffix: '%',
+        label: 'detection accuracy',
+        note: 'With potential applications for autonomous underwater vehicles (AUVs).',
+      },
     },
     bullets: [
       'Developed and trained a TensorFlow object detection model on an open-source underwater plastic dataset, accurately identifying plastics of various sizes, shapes, and colors under challenging lighting conditions.',

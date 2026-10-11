@@ -22,6 +22,8 @@ export default function Hero() {
           </h1>
           <p className="mt-6 max-w-3xl text-xl leading-snug text-ink sm:text-3xl">{profile.headline}</p>
 
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">{profile.bio}</p>
+
           <p className="mt-8 max-w-xl border-l-2 border-accent pl-3 text-base text-ink-soft">{profile.availability}</p>
           <div className="mt-6 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
             <a href={RESUME_PDF} download className="btn-primary col-span-2">
