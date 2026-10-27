@@ -9,6 +9,20 @@
       content="Engineering Science student at Western University building robots end to end: controls, PLC logic, and vision. Cut a production robot cell's cycle time from 35s to 2s at Spirol. Seeking Summer 2027 internships."
     />
     <meta name="theme-color" content="#F4F1EA" />
+    <script>
+      // Apply the saved or system theme before first paint so there is no light flash.
+      (function () {
+        var saved = null;
+        try {
+          saved = localStorage.getItem('theme');
+        } catch (e) {}
+        var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (dark) {
+          document.documentElement.classList.add('dark');
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#161512');
+        }
+      })();
+    </script>
     <link rel="canonical" href="https://yakshb07.github.io/PersonalPortfolio/" />
     <link rel="icon" type="image/svg+xml" href="/PersonalPortfolio/favicon.svg" />
     <link rel="apple-touch-icon" href="/PersonalPortfolio/apple-touch-icon.png" />
@@ -31,10 +45,10 @@
       content="Built a production robot inspection cell at Spirol that cut cycle time from 35s to 2s. Seeking Summer 2027 internships."
     />
     <meta name="twitter:image" content="https://yakshb07.github.io/PersonalPortfolio/og-image.png" />
-    <script type="module" crossorigin src="/PersonalPortfolio/assets/index-IMBY0s6n.js"></script>
-    <link rel="stylesheet" crossorigin href="/PersonalPortfolio/assets/index-DytuJnRw.css">
+    <script type="module" crossorigin src="/PersonalPortfolio/assets/index-XWQ-MwXd.js"></script>
+    <link rel="stylesheet" crossorigin href="/PersonalPortfolio/assets/index-DJbEksKR.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"></div>
   </body>
 </html>
